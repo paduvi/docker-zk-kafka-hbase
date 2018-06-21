@@ -1,7 +1,7 @@
 FROM anapsix/alpine-java
 
 ARG apache_mirror=http://mirrors.ocf.berkeley.edu/apache
-ARG hbase_version=1.2.6
+ARG hbase_version=1.2.6.1
 
 RUN apk add --update wget curl
 RUN wget -O /tmp/hbase.tar.gz ${apache_mirror}/hbase/stable/hbase-${hbase_version}-bin.tar.gz
