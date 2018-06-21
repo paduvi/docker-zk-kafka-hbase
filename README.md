@@ -12,8 +12,13 @@ host machine, your application can write directly to Zookeeper, which is also sh
 ## Quick Start
 
 ```bash
+export KAFKA_TOPICS="Topic1:1:3,Topic2:1:1:compact"
 ./start-all.sh
 ```
+
+Defining `KAKFA_TOPICS` in the environment gives the Kafka container the specifications for topics to create upon launch.
+In the example above, we are creating `Topic1` with 1 partition and 3 replicas and a compacted `Topic2` with 1 partition
+and 1 replica. (See https://github.com/wurstmeister/kafka-docker#automatically-create-topics)
 
 The first time the `start-all.sh` script runs, it will build a Docker image for HBase. As long as the image
 exists, the script will immediately continue to deploying the containers for Zookeeper, Kafka, and HBase.

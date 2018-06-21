@@ -16,7 +16,7 @@ services:
       - zookeeper
     environment:
       KAFKA_ADVERTISED_HOST_NAME: ${KAFKA_ADVERTISED_HOST}
-      KAFKA_CREATE_TOPICS: "my-topic:1:1,my-other-topic:1:1"
+      KAFKA_CREATE_TOPICS: ${KAFKA_TOPICS}
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     links:
       - zookeeper
