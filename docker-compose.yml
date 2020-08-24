@@ -32,10 +32,11 @@ services:
     ports:
       - 16000:16000 # master
       - 16010:16010 # master-ui
+      - 16030:16030 # rs
       - 16201:16201 # rs
       - 16301:16301 # rs-ui
     volumes:
-      - 'hbase_data:/home/hbase'
+      - 'hbase_data:/hbase-data'
     depends_on:
       - zookeeper
 
