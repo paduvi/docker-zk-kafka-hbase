@@ -1,11 +1,5 @@
-version: '3'
+version: "3.8"
 services:
-  zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: zookeeper
-    ports:
-      - 2181:2181
-
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -13,25 +7,22 @@ services:
     ports:
       - 9092:9092
     depends_on:
-      - zookeeper
+      - hbase
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: ${KAFKA_ADVERTISED_HOST}
       KAFKA_CREATE_TOPICS: ${KAFKA_TOPICS}
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: hbase:2181
     links:
-      - zookeeper
+      - hbase
 
   hbase:
-    build: ./hbase
-    image: lee51/hbase
+    build: 
+      context: ./hbase
+      network: host
     container_name: hbase
     hostname: ${HOSTNAME}
-    depends_on:
-      - zookeeper
-    links:
-      - zookeeper
     ports:
-      - 16000:16000 # master
-      - 16010:16010 # master-ui
-      - 16201:16201 # rs
-      - 16301:16301 # rs-ui
+      - 60000:60000 # master
+      - 60010:60010 # master-ui
+      - 60020:60020 # rs
+      - 60030:60030 # rs-ui
+      - 2181:2181   # zookeeper

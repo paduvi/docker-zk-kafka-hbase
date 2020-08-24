@@ -1,18 +1,24 @@
-FROM anapsix/alpine-java
+# Pull base image.
+FROM java:8
+MAINTAINER fenqi <fenqi@mogujie.com>
 
-ARG apache_mirror=http://mirrors.viethosting.com/apache
-ARG hbase_version=2.3.1
+# Install Hbase.
+# ADD hbase-1.2.0-cdh5.7.0.tgz /tmp/
+RUN \
+  cd /tmp && \
+  wget https://github.com/sel-fish/hbase-1.2.0-cdh5.7.0/releases/download/mj23/hbase-1.2.0-cdh5.7.0.tgz && \
+  tar xvzf hbase-1.2.0-cdh5.7.0.tgz && \
+  mv hbase-1.2.0-cdh5.7.0 /opt/hbase && \
+  export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 
-RUN apk add --update wget curl
-RUN wget -O /tmp/hbase.tar.gz ${apache_mirror}/hbase/${hbase_version}/hbase-${hbase_version}-bin.tar.gz
-RUN cd /opt && tar xzf /tmp/hbase.tar.gz
-RUN ln -s /opt/hbase-${hbase_version} /usr/local/hbase
-RUN echo "PATH=$PATH:/usr/local/hbase/bin" > /etc/profile.d/hbase.sh
-COPY hbase-env.sh hbase-site.xml /opt/hbase-${hbase_version}/conf/
+# Expose Hbase ports
+#
+#   2181 – zookeeper port
+#   60000 – master api port
+#   60010 – master web port
+#   60020 – regionserver api port
+#   60030 – regionserver web port
+EXPOSE 2181 60000 60010 60020 60030
 
-RUN adduser -s /bin/bash -D hbase
-RUN chown hbase:hbase -R /opt/hbase-${hbase_version}/conf
-USER hbase
-WORKDIR /home/hbase
-COPY start-hbase.sh ./
-CMD ./start-hbase.sh
+# Define default command.
+CMD ["/opt/hbase/bin/hbase", "master", "start"]
