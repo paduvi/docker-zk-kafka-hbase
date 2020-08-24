@@ -5,6 +5,16 @@
      <name>hbase.zookeeper.quorum</name>
      <value>zookeeper</value>
   </property>
+  
+  <property>
+     <name>hbase.zookeeper.property.clientPort</name>
+     <value>2181</value>
+  </property>
+
+  <property>
+     <name>zookeeper.znode.parent</name>
+     <value>/hbase</value>
+  </property>
 
   <property>
     <name>hbase.cluster.distributed</name>
