@@ -1,6 +1,6 @@
 FROM anapsix/alpine-java
 
-ARG apache_mirror=http://mirrors.ocf.berkeley.edu/apache
+ARG apache_mirror=http://mirrors.viethosting.com/apache
 ARG hbase_version=1.2.6.1
 
 RUN apk add --update wget curl
