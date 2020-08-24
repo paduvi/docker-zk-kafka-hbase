@@ -1,17 +1,17 @@
 version: "3.8"
 services:
   kafka:
-    image: wurstmeister/kafka
-    container_name: kafka
-    hostname: ${KAFKA_ADVERTISED_HOST}
+    image: 'docker.io/bitnami/kafka:2-debian-10'
     ports:
-      - 9092:9092
-    depends_on:
-      - hbase
+      - '9092:9092'
+    container_name: kafka
+    hostname: ${HOSTNAME}
+    volumes:
+      - 'kafka_data:/bitnami'
     environment:
-      KAFKA_CREATE_TOPICS: ${KAFKA_TOPICS}
-      KAFKA_ZOOKEEPER_CONNECT: hbase:2181
-    links:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=hbase:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
       - hbase
 
   hbase:
@@ -26,3 +26,6 @@ services:
       - 60020:60020 # rs
       - 60030:60030 # rs-ui
       - 2181:2181   # zookeeper
+
+volumes:
+  kafka_data:

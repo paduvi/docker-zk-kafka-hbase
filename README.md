@@ -12,19 +12,5 @@ host machine, your application can write directly to Zookeeper, which is also sh
 ## Quick Start
 
 ```bash
-export KAFKA_TOPICS="Topic1:1:3,Topic2:1:1:compact"
 ./start-all.sh
 ```
-
-Defining `KAKFA_TOPICS` in the environment gives the Kafka container the specifications for topics to create upon launch.
-In the example above, we are creating `Topic1` with 1 partition and 3 replicas and a compacted `Topic2` with 1 partition
-and 1 replica. (See https://github.com/wurstmeister/kafka-docker#automatically-create-topics)
-
-The first time the `start-all.sh` script runs, it will build a Docker image for HBase. As long as the image
-exists, the script will immediately continue to deploying the containers for Zookeeper, Kafka, and HBase.
-The Zookeeper service exposes port 2181; the HBase service exposes port 9092 (broker), and the HBase service
-exposes ports 16000 (master), 16010 (master UI), 16201 (regionserver), 16301 (regionserver UI). Furthermore,
-the docker-compose file maps the exposed container ports to the corresponding ports on your host machine,
-so you can run commands such as `zkCli.sh`, `kafka-topics.sh`, and `hbase shell` from your host (assuming
-the libraries are available and properly configured on your host machine. Therefore, any downstream applications
-can reach each of these services as if they were running directly on the host machine.
