@@ -5,7 +5,7 @@ services:
     container_name: zookeeper
     hostname: ${HOSTNAME}
     ports:
-      - '2181:2181'
+      - 2181:2181
     volumes:
       - 'zookeeper_data:/bitnami'
     environment:
@@ -13,7 +13,7 @@ services:
   kafka:
     image: 'docker.io/bitnami/kafka:2-debian-10'
     ports:
-      - '9092:9092'
+      - 9092:9092
     container_name: kafka
     hostname: ${HOSTNAME}
     volumes:
@@ -27,7 +27,6 @@ services:
   hbase:
     build: 
       context: ./hbase
-#      network: host
     container_name: hbase
     hostname: ${HOSTNAME}
     ports:
@@ -40,8 +39,19 @@ services:
     depends_on:
       - zookeeper
 
-
+  aerospike:
+    image: 'aerospike'
+    container_name: aerospike
+    hostname: ${HOSTNAME}
+    ports:
+      - 3000:3000
+      - 3001:3001
+      - 3002:3002
+    volumes:
+      - 'aerospike_data:/opt/aerospike/data'
+      
 volumes:
   kafka_data:
   zookeeper_data:
   hbase_data:
+  aerospike_data:
