@@ -12,5 +12,5 @@ host machine, your application can write directly to Zookeeper, which is also sh
 ## Quick Start
 
 ```bash
-./start-all.sh
+./start-all.sh --build -d
 ```
