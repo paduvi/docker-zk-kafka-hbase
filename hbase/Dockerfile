@@ -4,7 +4,7 @@ ARG apache_mirror=http://mirrors.viethosting.com/apache
 ARG hbase_version=2.3.1
 
 RUN apk add --update wget curl
-RUN wget -O /tmp/hbase.tar.gz ${apache_mirror}/hbase/stable/hbase-${hbase_version}-bin.tar.gz
+RUN wget -O /tmp/hbase.tar.gz ${apache_mirror}/hbase/${hbase_version}/hbase-${hbase_version}-bin.tar.gz
 RUN cd /opt && tar xzf /tmp/hbase.tar.gz
 RUN ln -s /opt/hbase-${hbase_version} /usr/local/hbase
 RUN echo "PATH=$PATH:/usr/local/hbase/bin" > /etc/profile.d/hbase.sh
