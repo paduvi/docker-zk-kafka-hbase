@@ -44,7 +44,6 @@ services:
   aerospike:
     image: 'aerospike'
     container_name: aerospike
-    hostname: ${HOSTNAME}
     ports:
       - 3000:3000
       - 3001:3001
